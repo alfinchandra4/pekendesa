@@ -48,8 +48,10 @@
         <div class="col-md-6">
             <label for="province" class="form-label">Province</label>
             <select id="province" class="form-select" name="province">
-                <option selected>Choose...</option>
-                <option>...</option>
+                <option value="0">== Select Province ==</option>
+                @foreach ($provinces as $key => $value)
+                <option value="{{ $value['code'] }}">{{ $value['name'] }}</option>
+                @endforeach
             </select>
         </div>
         <div class="col-md-4">
@@ -76,6 +78,66 @@
         </div> --}}
     </form>
 
+    <h5 class="fw-bold mt-4 mb-3">Payment Informations</h5>
+    <div class="amount">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="h6">Rp. 0</div>
+                <span class="text-muted">Country Tax</span>
+            </div>
+            <div class="col-md-2">
+                <div class="h6">Rp. 12,500</div>
+                <span class="text-muted">Shipping Fee</span>
+            </div>
+            <div class="col-md-2">
+                <div class="h6">Rp. 102,500</div>
+                <span class="text-muted">Subtotal</span>
+            </div>
+            <div class="col-md-2">
+                <div class="h6 text-success">Rp. 123,000</div>
+                <span class="text-muted">Total</span>
+            </div>
+            <div class="col-md-4">
+                <a href="#" class="btn btn-lg btn-success">Checkout Now</a>
+            </div>
+        </div>
+    </div>
+
+
 </div>
+<script>
+    $(function () {
+        $('#province').on('change', function () {
+            var province_id = this.value;
+            $.ajax({
+                url: "/getcity/" + province_id,
+                type: "GET",
+                error: function (xhr, status, error) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    console.log(err.Message);
+                },
+                success: function (result) {
+                    // $("#city-dropdown").html(result);
+                    if (result.length == 0) {
+                        $('#city').empty();
+                        $("#city").append("<option value='#'>Not Found</option>");
+                    } else {
+                        $('#city').empty();
+                        var html = "";
+                        result.forEach(element => {
+                            html += "<option value=" + element.code + ">" + element
+                                .name + "</option>";
+                        });
+                        $("#city").append(html);
+                    }
+
+                }
+            });
+        });
+    });
+
+</script>
+
 @endsection
+
 {{--  --}}

@@ -61,9 +61,13 @@
                 </div>
                 <div class="col-md-4 mt-2">
                     @php
-                        $p = App\Models\Product::where('id', $product->id)->where('user_id', auth()->user()->id)->count();
+                        if (auth()->check()) {
+                            $p = App\Models\Product::where('id', $product->id)->where('user_id', auth()->user()->id)->count();
+                        } else {
+                            $p = 0;
+                        }
                     @endphp
-                    @if ($p == 0)
+                    @if ($p == 0 || auth()->check() == 0)
                         <div style="background: #29A867; width:45%" class="p-1 text-center rounded">
                             <a href="{{ route('add-to-cart', $product->id) }}" class="text-decoration-none text-white">Add
                                 To Cart</a>

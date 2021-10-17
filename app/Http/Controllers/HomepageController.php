@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Laravolt\Indonesia\Models\Province;
+use Laravolt\Indonesia\Models\City;
 
 class HomepageController extends Controller
 {
@@ -23,6 +25,14 @@ class HomepageController extends Controller
     }
 
     public function cart() {
-        return view('public.pages.cart');
+        $provinces = Province::all();
+        return view('public.pages.cart', [
+            'provinces' => $provinces
+        ]);
+    }
+
+    public function getCity($province_code) {
+        $cities = City::where('province_code', $province_code)->get();
+        return response()->json($cities);
     }
 }

@@ -71,3 +71,7 @@ Route::get('/forget', function() {
     session()->forget('cart');
     return redirect('/');
 });
+
+// Ajax get City
+Route::get('/getcity/{province_id}', [HomepageController::class, 'getCity']);
+//
