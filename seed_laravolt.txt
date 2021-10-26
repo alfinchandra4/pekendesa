@@ -1,0 +1,1 @@
+php artisan laravolt:indonesia:seed

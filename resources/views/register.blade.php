@@ -41,6 +41,12 @@
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" placeholder="Phone" required name="phone">
+                            <div class="form-control-icon">
+                                <i class="bi bi-phone"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
                             <input type="email" class="form-control form-control-xl" placeholder="Email" required name="email">
                             <div class="form-control-icon">
                                 <i class="bi bi-envelope"></i>
@@ -53,7 +59,7 @@
                             </div>
                         </div>
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input type="text" class="form-control form-control-xl" placeholder="Nama toko" name="store_name">
+                            <input type="text" class="form-control form-control-xl" placeholder="Store Name" name="store_name">
                             <div class="form-control-icon">
                                 <i class="bi bi-shield-lock"></i>
                             </div>

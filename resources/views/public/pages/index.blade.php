@@ -97,7 +97,7 @@
                 <div class="card-body p-0">
                     <a href="{{ route('product-detail', $product->id) }}">
                         <img src="{{ asset('storage/product_photos/'.$productPhoto->photo_path) }}" alt=""
-                            class="img-fluid rounded-1">
+                            class="img-fluid rounded-1" style="height: 200px; object-fit:cover">
                     </a>
                     <div style="font-size: 10pt" class="pt-2 mb-1">{{ $product->product_name }}</div>
                     <h6 class="text-danger fw-bold">Rp. {{ number_format($product->price) }}</h6>

@@ -8,16 +8,22 @@
             <li class="breadcrumb-item active" aria-current="page">Cart</li>
         </ol>
     </nav>
+
+    @if (session('cart'))
     <div class="row pb-4 pt-3 fw-bold">
         <div class="col-md-2">Image</div>
         <div class="col-md-4">Name & Seller</div>
         <div class="col-md-3">Price</div>
         <div class="col-md-3">Menu</div>
     </div>
+    @php
+    $total = 0;
+    @endphp
     @foreach (session('cart') as $cart)
     @php
     $product = App\Models\Product::find($cart);
     $productFirstPhoto = App\Models\ProductPhoto::where('product_id', $cart)->orderBy('created_at', 'ASC')->first();
+    $total += $product->price
     @endphp
     <div class="row mb-3">
         <div class="col-md-2">
@@ -26,20 +32,23 @@
         </div>
         <div class="col-md-4">
             <div class="h6">{{ $product->product_name }}</div>
-            <span class="text-muted">By Paul Allen</span>
+            <span class="text-muted">{{ $product->seller->name }}</span>
         </div>
         <div class="col-md-3">
-            <div class="h6">Rp. 25,000</div>
+            <div class="h6">{{ number_format($product->price) }}</div>
             <span class="text-muted">IDR</span>
         </div>
         <div class="col-md-3">
-            <a href="" class="btn btn-danger">Remove</a>
+            <a href="{{ route('delete-item', $cart) }}" class="btn btn-danger">Remove</a>
         </div>
     </div>
     @endforeach
+    @else
+    <span class="fw-bold h3">Empty cart!</span>
+    @endif
     <hr class="col-md-10">
     <h5 class="fw-bold">Shipping Details</h5>
-    <form class="row g-3 col-md-10" method="POST" action="#">
+    <form class="row g-3 col-md-10" method="POST" action="{{ route('checkout') }}" id="form_order">
         @csrf
         <div class="col-12">
             <label for="inputAddress" class="form-label">Address</label>
@@ -50,7 +59,7 @@
             <select id="province" class="form-select" name="province">
                 <option value="0">== Select Province ==</option>
                 @foreach ($provinces as $key => $value)
-                <option value="{{ $value['code'] }}">{{ $value['name'] }}</option>
+                <option value="{{ $value['code'] }}" data-province_id="{{ $value['id'] }}">{{$value['code'] }} {{ $value['name'] }}</option>
                 @endforeach
             </select>
         </div>
@@ -71,7 +80,7 @@
         </div>
         <div class="col-md-6">
             <label for="phone" class="form-label">Phone</label>
-            <input type="text" class="form-control" id="phone" required name="phone">
+            <input type="text" class="form-control" id="phone" required name="phone" placeholder="62812xxxxx">
         </div>
         {{-- <div class="col-12">
           <button type="submit" class="btn btn-primary">Sign in</button>
@@ -86,19 +95,19 @@
                 <span class="text-muted">Country Tax</span>
             </div>
             <div class="col-md-2">
-                <div class="h6">Rp. 12,500</div>
+                <div class="h6">{{ isset($total) ? 'Rp. 30,000' : 'Rp. 0' }}</div>
                 <span class="text-muted">Shipping Fee</span>
             </div>
             <div class="col-md-2">
-                <div class="h6">Rp. 102,500</div>
+                <div class="h6">Rp. {{ isset($total) ? number_format($total) : '0' }}</div>
                 <span class="text-muted">Subtotal</span>
             </div>
             <div class="col-md-2">
-                <div class="h6 text-success">Rp. 123,000</div>
+                <div class="h6 text-success">Rp. {{ isset($total) ? number_format($total + 30000) : '0' }}</div>
                 <span class="text-muted">Total</span>
             </div>
             <div class="col-md-4">
-                <a href="#" class="btn btn-lg btn-success">Checkout Now</a>
+                <button type="submit" class="btn btn-lg btn-success" form="form_order">Checkout Now</button>
             </div>
         </div>
     </div>
@@ -108,9 +117,10 @@
 <script>
     $(function () {
         $('#province').on('change', function () {
-            var province_id = this.value;
+            // var province_id = $(this).find(':selected').data('province_id')
+            var province_code = this.value;
             $.ajax({
-                url: "/getcity/" + province_id,
+                url: "/getcity/" + province_code,
                 type: "GET",
                 error: function (xhr, status, error) {
                     var err = eval("(" + xhr.responseText + ")");

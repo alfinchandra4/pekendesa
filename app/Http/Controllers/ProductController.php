@@ -140,9 +140,21 @@ class ProductController extends Controller
 
     }
 
+    public function delete_items_on_cart($product_id)
+    {
+        $cart = session()->get('cart');
+        foreach ($cart as $key => $value){
+            if ($value == $product_id) {
+                unset($cart[$key]);
+            }
+        }
+        session()->put('cart', $cart);
+        return back();
+    }
+
     public function add_to_cart($product_id)
     {
-        if (! auth()->check()) {
+        if (!auth()->check()) {
             return back()->withError('Error! You must login first');
         }
         $cart = session()->get('cart');

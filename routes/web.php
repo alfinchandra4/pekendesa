@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,13 +21,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomepageController::class, 'index'])->name('homepage');
-Route::get('/cart', [HomepageController::class, 'cart'])->name('cart');
+Route::get('/cart', [HomepageController::class, 'cart'])->name('cart')->middleware('auth');
+Route::post('/checkout', [ HomepageController::class, 'checkout_item'])->name('checkout');
 Route::get('/product_detail/{product_id}', [HomepageController::class, 'product_detail'])->name('product-detail');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     Route::prefix('dashboard')->group(function() {
         Route::get('/', [DashboardController::class, 'index'])->name('admin-dashboard');
+    });
+
+    Route::prefix('transaction')->group(function() {
+        Route::get('/', [TransactionController::class, 'index'])->name('admin-transaction');
+
+        // Buy Product
+        Route::get('detail/buy/{order_id}', [TransactionController::class, 'detail_buy'])->name('admin-transaction-detail-buy');
+
+        // Sell Product
+        Route::get('/sell', [TransactionController::class, 'sell'])->name('admin-transaction-sell');
+        Route::get('detail/sell/{order_id}', [TransactionController::class, 'detail_sell'])->name('admin-transaction-detail-sell');
     });
 
     Route::prefix('product')->group(function() {
@@ -46,6 +59,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
         // Add Session cart
         Route::get('/cart/{product_id}', [ProductController::class, 'add_to_cart'])->name('add-to-cart');
+
+        // Remove product on cart
+        Route::get('/cart/{product_id}/delete', [ProductController::class, 'delete_items_on_cart'])->name('delete-item');
     });
 
     Route::prefix('profile')->group(function() {
@@ -73,5 +89,5 @@ Route::get('/forget', function() {
 });
 
 // Ajax get City
-Route::get('/getcity/{province_id}', [HomepageController::class, 'getCity']);
+Route::get('/getcity/{province_code}', [HomepageController::class, 'getCity']);
 //

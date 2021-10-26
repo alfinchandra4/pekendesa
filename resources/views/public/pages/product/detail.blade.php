@@ -82,7 +82,7 @@
             <div class="description col-md-7 mb-3">
                 {{ $product->description }}
             </div>
-            <div class="customers_review">
+            {{-- <div class="customers_review">
                 <h6 class="mb-3">Customers Review (3)</h6>
                 <div class="customer_list">
                     <div class="customer_review mb-3">
@@ -104,7 +104,7 @@
                     </div>
 
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

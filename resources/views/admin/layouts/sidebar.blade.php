@@ -15,7 +15,7 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a href="index.html" class='sidebar-link'>
+            <a href="{{ route('admin-transaction') }}" class='sidebar-link'>
                 <i class="bi bi-grid-fill"></i>
                 <span>Transactions</span>
             </a>
