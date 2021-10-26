@@ -115,6 +115,7 @@
                     @break
                     @case(1)
                     <span class="fw-bold text-primary">On Shipping</span>
+                    <span><i>[ {{ $order->shipping_description }} ]</i></span>
                     @break
                     @case(2)
                     <span class="fw-bold text-success">Received</span>

@@ -40,6 +40,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
         // Sell Product
         Route::get('/sell', [TransactionController::class, 'sell'])->name('admin-transaction-sell');
         Route::get('detail/sell/{order_id}', [TransactionController::class, 'detail_sell'])->name('admin-transaction-detail-sell');
+
+        // Transaction accepted
+        Route::get('/sell/accepted/{order_id}', [TransactionController::class, 'accepted_order'])->name('admin-transaction-sell-acepted');
+        Route::get('/sell/deny/{order_id}', [TransactionController::class, 'deny_order'])->name('admin-transaction-sell-deny');
+
+        // Input tracking number
+        Route::post('/tracking_code/{order_id}', [TransactionController::class, 'input_tracking_code'])->name('admin-transaction-input-tracking-code');
     });
 
     Route::prefix('product')->group(function() {

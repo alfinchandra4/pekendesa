@@ -44,7 +44,7 @@
                     {{ date('d F Y', strtotime($order->created_at)) }}
                 </div>
                 <div class="col-md-2">
-                    <div class="text-muted" style="font-size: 10pt">Paymnt Status:</div>
+                    <div class="text-muted" style="font-size: 10pt">Payment Status:</div>
                     @switch($order->payment_status)
                         @case(0)
                                 <span class="fw-bold text-secondary">Cancelled</span>
@@ -74,7 +74,7 @@
                     @endswitch
                 </div>
                 <div class="col-md-1">
-                    <a href="{{ route('admin-transaction-detail-buy', $order->id) }}">
+                    <a href="{{ route('admin-transaction-detail-sell', $order->id) }}">
                         <i class="fas fa-file-invoice"></i> Detail
                     </a>
                 </div>

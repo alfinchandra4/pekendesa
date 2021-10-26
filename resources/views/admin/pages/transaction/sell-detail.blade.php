@@ -115,6 +115,7 @@
                     @break
                     @case(1)
                     <span class="fw-bold text-primary">On Shipping</span>
+                    <span><i>[ {{ $order->shipping_description }} ]</i></span>
                     @break
                     @case(2)
                     <span class="fw-bold text-success">Received</span>
@@ -147,7 +148,44 @@
                 </div>
             </div>
         </div>
+        @if ($order->payment_status == 1)
+        <div style="float: right">
+            <a href="{{ route('admin-transaction-sell-deny', $order->id) }}" class="btn btn-default">Tolak Pesanan</a>
+            <a href="{{ route('admin-transaction-sell-acepted', $order->id) }}" class="btn btn-primary">Pembayaran diterima</a>
+        </div>
+        @endif
+
+        @if ($order->payment_status != 1 && $order->payment_status != 0 && $order->shipping_status == 0)
+        <button type="button" style="float: right" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Konfirmasi pengiriman
+        </button>
+        @endif
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Pengiriman</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{{ route('admin-transaction-input-tracking-code', $order->id) }}" method="post" id="input_resi">
+              @csrf
+              <div class="form-group">
+                <label for="resi">Input nomor resi</label>
+                <input type="text" name="resi" id="resi" class="form-control">
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" form="input_resi" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 {{--  --}}
