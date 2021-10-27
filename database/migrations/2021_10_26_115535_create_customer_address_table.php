@@ -21,7 +21,7 @@ class CreateCustomerAddressTable extends Migration
             $table->char('zip_code');
             $table->string('country');
             $table->char('phone');
-            $table->foreignId('order_id')->constrained()->nullOnDelete();
+            $table->foreignId('order_id')->constrained();
             $table->timestamps();
 
         });

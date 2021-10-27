@@ -143,7 +143,7 @@ class ProductController extends Controller
     public function delete_items_on_cart($product_id)
     {
         $cart = session()->get('cart');
-        foreach ($cart as $key => $value){
+        foreach ($cart as $key => $value) {
             if ($value == $product_id) {
                 unset($cart[$key]);
             }

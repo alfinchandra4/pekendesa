@@ -13,12 +13,12 @@ class _AuthController extends Controller
     }
 
     public function postlogin(Request $request) {
-        $credentials = $request->validate([
+        $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $request->session()->regenerate();
 
             return redirect()->route('homepage');

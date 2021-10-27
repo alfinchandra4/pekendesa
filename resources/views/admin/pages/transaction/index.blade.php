@@ -46,7 +46,7 @@
                 </div>
                 {{-- Status: belum bayar, (pending: truk muatan, shipping: recyle logo, received: gosend logo) --}}
                 <div class="col-md-2">
-                    <div class="text-muted" style="font-size: 10pt">Paymnt Status:</div>
+                    <div class="text-muted" style="font-size: 10pt">Payment Status:</div>
                     @switch($order->payment_status)
                         @case(0)
                                 <span class="fw-bold text-secondary">Cancelled</span>

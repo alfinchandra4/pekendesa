@@ -11,7 +11,7 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('homepage') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Categories</a>
+                    <a class="nav-link active" href="{{ route('categories') }}">Categories</a>
                 </li>
                 @guest
                 <li class="nav-item">

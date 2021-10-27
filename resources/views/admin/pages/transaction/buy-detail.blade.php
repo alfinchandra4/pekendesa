@@ -148,6 +148,12 @@
                 </div>
             </div>
         </div>
+
+        @if ($order->shipping_status == 1)
+        <a href="{{ route('admin-transaction-completed-order', $order->id ) }}"
+            onclick="return confirm('Apakah pesanan sudah sesuai?')" style="float: right"
+            class="btn btn-primary btn-lg">Selesaikan pesanan</a>
+        @endif
     </div>
 </div>
 @endsection

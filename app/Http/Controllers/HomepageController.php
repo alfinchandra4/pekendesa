@@ -19,6 +19,13 @@ class HomepageController extends Controller
         ]);
     }
 
+    public function categories() {
+        $products = Product::orderByDesc('created_at')->get();
+        return view('public.pages.categories', [
+            'products' => $products
+        ]);
+    }
+
     public function checkout_item(Request $request) {
         // $table->foreignId('user_id')->constrained();
         // $table->foreignId('customer_id')->constrained('users');
@@ -41,7 +48,7 @@ class HomepageController extends Controller
                 'user_id' => $seller_id,
                 'customer_id' => auth()->user()->id,
                 'product_id' => $value,
-                'amount' => $product->price,
+                'amount' => $product->price + 30000,
                 'payment_status' => '1',
                 'shipping_status' => '0',
             ]);

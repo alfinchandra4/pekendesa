@@ -14,12 +14,8 @@
 @endsection
 
 @section('content')
-<div class="container mb-3">
-    <img src="{{ asset('public_/banner.jpg') }}" alt="" class="img-fluid">
-</div>
-
 <div class="trend_categories container mb-4 mt-4">
-    <h4 class="fw-bold float-left">Trend Categories </h4>
+    <h4 class="fw-bold float-left">More Categories </h4>
     <div class="row">
         <div class="col-4 col-md-2 mb-4">
             <div class="card border-0">
@@ -85,7 +81,7 @@
 </div>
 
 <div class="new_products container mb-5">
-    <h4 class="fw-bold">New Products</h4>
+    <h4 class="fw-bold">More Products</h4>
     <div class="row">
         {{-- {{dd($products)}} --}}
         @foreach ($products as $product)

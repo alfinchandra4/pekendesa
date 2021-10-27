@@ -54,4 +54,9 @@ class TransactionController extends Controller
         $updateResi = $order->update(['shipping_description' => $request->resi]);
         return back()->withSuccess('Resi pengiriman dikonfirmasi');
     }
+
+    public function completed_order($order_id) {
+        Order::find($order_id)->increment('shipping_status');
+        return back()->withSuccess('Terimakasih telah berbelanja');
+    }
 }

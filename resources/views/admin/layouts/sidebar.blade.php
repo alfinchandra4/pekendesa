@@ -14,26 +14,26 @@
                 <span>My Products</span>
             </a>
         </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item {{ (request()->is('admin/transaction*')) ? 'active' : '' }}">
             <a href="{{ route('admin-transaction') }}" class='sidebar-link'>
                 <i class="bi bi-grid-fill"></i>
                 <span>Transactions</span>
             </a>
         </li>
-        <li class="sidebar-item">
+        {{-- <li class="sidebar-item">
             <a href="index.html" class='sidebar-link'>
                 <i class="bi bi-grid-fill"></i>
                 <span>Store Settings</span>
             </a>
-        </li>
+        </li> --}}
         {{-- <li class="sidebar-item">
             <a href="index.html" class='sidebar-link'>
                 <i class="bi bi-grid-fill"></i>
                 <span>Shipping Address</span>
             </a>
         </li> --}}
-        <li class="sidebar-item">
-            <a href="index.html" class='sidebar-link'>
+        <li class="sidebar-item {{ (request()->is('admin/profile*')) ? 'active' : '' }}">
+            <a href="{{ route('admin-profile') }}" class='sidebar-link'>
                 <i class="bi bi-grid-fill"></i>
                 <span>My Account</span>
             </a>

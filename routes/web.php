@@ -4,6 +4,7 @@ use App\Http\Controllers\_AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomepageController::class, 'index'])->name('homepage');
+Route::get('/categories', [HomepageController::class, 'categories'])->name('categories');
 Route::get('/cart', [HomepageController::class, 'cart'])->name('cart')->middleware('auth');
 Route::post('/checkout', [ HomepageController::class, 'checkout_item'])->name('checkout');
 Route::get('/product_detail/{product_id}', [HomepageController::class, 'product_detail'])->name('product-detail');
@@ -47,6 +49,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
         // Input tracking number
         Route::post('/tracking_code/{order_id}', [TransactionController::class, 'input_tracking_code'])->name('admin-transaction-input-tracking-code');
+
+        // Set order is completed
+        Route::geT('/completed/{order_id}', [TransactionController::class, 'completed_order'])->name('admin-transaction-completed-order');
     });
 
     Route::prefix('product')->group(function() {
@@ -72,7 +77,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     });
 
     Route::prefix('profile')->group(function() {
-
+        Route::get('/', [ProfileController::class, 'index'])->name('admin-profile');
+        Route::post('/update', [ProfileController::class, 'update'])->name('admin-profile-update');
     });
 
     Route::prefix('shipping')->group(function() {
