@@ -32,12 +32,12 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <div class="text-muted" style="font-size: 10pt">Store:</div>
+                    <div class="text-muted" style="font-size: 10pt">Customer:</div>
                     @php
-                    $seller = App\Models\User::find($order->user_id);
+                    $seller = App\Models\User::find($order->customer_id);
                     $store_name = $seller->store_name
                     @endphp
-                    {{ $store_name }}
+                    {{ $seller->store_name }} {{ $order->id }}
                 </div>
                 <div class="col-md-2">
                     <div class="text-muted" style="font-size: 10pt">Order created:</div>

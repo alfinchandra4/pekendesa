@@ -24,10 +24,10 @@
             </div>
             <div class="col-md-4">
                 <div class="customer">
-                    <div class="text-muted mb-2">Store Name</div>
+                    <div class="text-muted mb-2">Customer Name</div>
                     <div class="fw-bold">
                         @php
-                        $seller = App\Models\User::find($order->user_id);
+                        $seller = App\Models\User::find($order->customer_id);
                         $store_name = $seller->store_name
                         @endphp
                         {{ $store_name }}

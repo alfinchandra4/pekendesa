@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductReview;
 use Illuminate\Http\Request;
 use Laravolt\Indonesia\Models\Province;
 use Laravolt\Indonesia\Models\City;
@@ -77,8 +78,10 @@ class HomepageController extends Controller
 
     public function product_detail($product_id) {
         $product = Product::find($product_id);
+        $reviews = ProductReview::where('product_id', $product_id)->orderByDesc('created_at')->get();
         return view('public.pages.product.detail', [
-            'product' => $product
+            'product' => $product,
+            'reviews' => $reviews
         ]);
     }
 

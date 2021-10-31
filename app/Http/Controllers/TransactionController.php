@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\ProductReview;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -17,8 +19,11 @@ class TransactionController extends Controller
 
     public function detail_buy($order_id) {
         $order = Order::find($order_id);
+        $product_id = $order->product_id;
+        $review = ProductReview::where('product_id', $product_id)->where('user_id', auth()->user()->id)->count();
         return view('admin.pages.transaction.buy-detail', [
-            'order' => $order
+            'order' => $order,
+            'review' => $review
         ]);
     }
 
@@ -58,5 +63,14 @@ class TransactionController extends Controller
     public function completed_order($order_id) {
         Order::find($order_id)->increment('shipping_status');
         return back()->withSuccess('Terimakasih telah berbelanja');
+    }
+
+    public function review_product(Request $request, $product_id) {
+        ProductReview::create([
+            'product_id' => $product_id,
+            'review' => $request->review,
+            'user_id' => auth()->user()->id
+        ]);
+        return back()->withSuccess('Terimakasih. Ulasan anda sangat berarti bagi penjual');
     }
 }

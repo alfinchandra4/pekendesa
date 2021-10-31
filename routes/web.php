@@ -51,7 +51,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
         Route::post('/tracking_code/{order_id}', [TransactionController::class, 'input_tracking_code'])->name('admin-transaction-input-tracking-code');
 
         // Set order is completed
-        Route::geT('/completed/{order_id}', [TransactionController::class, 'completed_order'])->name('admin-transaction-completed-order');
+        Route::get('/completed/{order_id}', [TransactionController::class, 'completed_order'])->name('admin-transaction-completed-order');
+
+        // Set review product
+        Route::post('/review/{product_id}', [TransactionController::class, 'review_product'])->name('admin-transaction-product-review');
     });
 
     Route::prefix('product')->group(function() {

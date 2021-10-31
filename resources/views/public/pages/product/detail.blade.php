@@ -82,29 +82,33 @@
             <div class="description col-md-7 mb-3">
                 {{ $product->description }}
             </div>
-            {{-- <div class="customers_review">
-                <h6 class="mb-3">Customers Review (3)</h6>
+            <div class="customers_review">
+                <h6 class="mb-3">Customers Review ({{count($reviews)}})</h6>
                 <div class="customer_list">
                     <div class="customer_review mb-3">
                         <div class="row">
-                            <div class="col-md-1">
-                                <img src="{{ asset('public_/samples/faces/1.jpg') }}" alt=""
-                                    class="img-fluid rounded-circle">
-                            </div>
-                            <div class="col-md-5">
-                                <div class="customer_name fw-bold mb-1">
-                                    Alfin Chandra
+                            @foreach ($reviews as $data)
+                            <div class="col-md-8 mb-3">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <img src="{{ asset('public_/samples/faces/1.jpg') }}" alt=""
+                                            class="img-fluid rounded-circle">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="customer_name fw-bold mb-1">
+                                            {{ $data->buyer->name }}
+                                        </div>
+                                        <div class="review_text" style="font-size: 11pt">
+                                            {{ $data->review }}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="review_text" style="font-size: 11pt">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum quaerat corporis porro
-                                    est non excepturi in esse, temporibus dicta obcaecati vitae?
-                                </div>
                             </div>
+                            @endforeach
                         </div>
                     </div>
-
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
 </div>
